@@ -45,11 +45,6 @@ class Register extends Component {
       email: this.state.email,
       password: this.state.password
     }
-    // const firstName = this.state.firstName
-    // const secondName = this.state.secondName
-    // const email = this.state.email
-    // const password = this.state.password
-    // alert(firstName + ' ' + secondName + ' ' + email + ' ' + password)
     if (registerData.firstName === "" || registerData.secondName === "" || registerData.email === "" || registerData.password === "") {
       this.setState({ errorMessage: "All fields need to be complete" })
     } else {
@@ -63,7 +58,7 @@ class Register extends Component {
     return (
       <>
       <element>
-      <element className={this.props.displayIfLoggedOut} >
+      <element className='buttonRowButton {this.props.displayIfLoggedOut}' >
         <Button onClick={this.handleShow} variant="contained" color="primary">
           Register
         </Button>

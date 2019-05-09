@@ -14,15 +14,16 @@ class App extends Component {
   registerHandler = (customer) => {
     var copyState = this.state
  copyState.customer.firstName=customer.firstName
+ copyState.customer.secondName=customer.secondName
+ copyState.customer.email=customer.email
+ copyState.customer.password=customer.password
 
-this.setState({copyState})
-
-     alert(customer.firstName + " + " + this.state.customer.firstName)
+this.setState({
+  copyState
+})
+this.signIn()
   }
 
-  // let jasper = Object.assign({}, this.state.jasper);    //creating copy of object
-  // jasper.name = 'someothername';                        //updating value
-  // this.setState({jasper});
 
 
   buttonHandler = (name, event) => {
@@ -44,7 +45,6 @@ this.setState({copyState})
       displayIfLoggedIn: "hide",
       displayIfLoggedOut: "display",
       login: false,
-
     })
   }
 
@@ -65,7 +65,7 @@ this.setState({copyState})
     displayIfLoggedOut: "display",
     
     customer: {
-      firstName: "Simon",
+      firstName: "",
       secondName: "",
       email: "",
       password: ""
@@ -185,10 +185,8 @@ this.setState({copyState})
     qtyOfTasks: 0
   }
 
-
-
   render() {
-    // alert (this.state.customer.firstName)
+    
     return (
 
       <div className="outerdiv">
@@ -200,12 +198,13 @@ this.setState({copyState})
             </div>
           </div>
         </div>
-
+{this.state.customer.firstName} {this.state.customer.secondName} {this.state.customer.email} {this.state.customer.password}
         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12 centered">
 
           <row>
             <div className="buttonsRow">
               <Buttonsrow
+              copystate={this.state}
                 loggedIn={this.state.loggedIn}
                 login={this.state.login}
                 displayIfLoggedIn={this.state.displayIfLoggedIn}
@@ -222,9 +221,7 @@ this.setState({copyState})
           <div className="maindiv">
             <div class="container">
               <div className="row innerarea centered">
-                <element className={this.state.signInPageVisible}>
-                  <SignIn />
-                </element>
+
 
 
                 {
