@@ -15,7 +15,6 @@ class Buttonsrow extends Component {
 
 
                         <span>
-
                         <Signin 
                         copyState={this.props.copyState}
                         buttonHandlerFunction={this.props.buttonHandlerFunction}
@@ -24,8 +23,8 @@ class Buttonsrow extends Component {
                         <Register 
                         registerHandlerFunction={this.props.registerHandlerFunction}
                         displayIfLoggedOut={this.props.displayIfLoggedOut}
-
-                        /></span>
+                        />
+                        </span>
                     </div>
 
 

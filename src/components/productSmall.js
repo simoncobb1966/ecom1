@@ -14,7 +14,7 @@ class ProductSmall extends Component {
 
     handleClose = (buttonName) => {
         this.setState({ open: false });
-        if (this.props.buttonHandlerFunction(buttonName) ==="close"){
+        if (this.props.buttonHandlerFunction(buttonName) === "close") {
             return
         }
         this.props.buttonHandlerFunction(buttonName)
@@ -25,7 +25,6 @@ class ProductSmall extends Component {
         open: false
     }
 
-    
     title = () => {
         if (this.props.jb.title.length < 11) {
             return "bigtitle"
@@ -48,14 +47,12 @@ class ProductSmall extends Component {
         })
     }
 
-    
-
     render() {
         var dir = require('./images/product/' + this.props.jb.image);
 
         return (
-
-            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3 centered">
+            
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 
                 <Dialog
                     open={this.state.open}
@@ -83,38 +80,27 @@ class ProductSmall extends Component {
                     </DialogActions>
                 </Dialog>
 
+                <div onClick={this.handleClickOpen} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} className={this.state.hover}>
 
+                    <div className="productnamebox">
+                        <h4 className="{this.title()} title">{this.props.jb.title}</h4>
+                    </div>
 
+                    <div>
+                        <img className="thumbnail img-fluid centered" src={dir} alt={this.props.jb.title}></img>
+                    </div>
 
-
-                <div>
-
-                    <div onClick={this.handleClickOpen} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} className={this.state.hover}>
-
-
-                        <div className="productnamebox">
-                            <h4 className="{this.title()} title">{this.props.jb.title}</h4>
-                        </div>
-
-                        <div>
-                            <img className="thumbnail img-fluid centered" src={dir} alt={this.props.jb.title}></img>
-                        </div>
-
-                        <div className="small-description">
-                             <p>{this.props.jb.synopsis.slice(0,70)}
-                            <span className="dotdotbuton"><Button size="small" color="primary" className="dotdotbuton">........</Button></span></p>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-danger buttona">Buy DVD</button>
-                            <button type="button" class="btn btn-primary buttona">BluRay</button>
-                        </div>
-
+                    <div className="small-description">
+                        <p>{this.props.jb.synopsis.slice(0, 70)}</p>
+                        <span className="dotdotbuton"><Button size="small" color="primary" className="dotdotbuton">........</Button></span>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-danger buttona">Buy DVD</button>
+                        <button type="button" class="btn btn-primary buttona">BluRay</button>
                     </div>
 
                 </div>
-
             </div>
-
         )
     }
 }

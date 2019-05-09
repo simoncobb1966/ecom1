@@ -4,10 +4,9 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Productsmall from './components/productSmall';
 import Buttonsrow from './components/buttonsrow';
-import SignIn from './components/signin'
-import { element } from 'prop-types';
-
-// import Button from '@material-ui/core/Button';
+// import SignIn from './components/signin'
+// import { element } from 'prop-types';
+import Button from '@material-ui/core/Button';
 
 class App extends Component {
 
@@ -40,10 +39,17 @@ class App extends Component {
 
 
   signOut = () => {
+
+    let copyState = this.state
+    copyState.customer.firstName = ""
+    copyState.customer.secondName = ""
+    copyState.customer.email = ""
+    copyState.customer.password = ""
+    copyState.displayIfLoggedIn = "hide"
+    copyState.displayIfLoggedOut = "display"
+    copyState.login = false
     this.setState({
-      displayIfLoggedIn: "hide",
-      displayIfLoggedOut: "display",
-      login: false,
+      copyState
     })
   }
 
@@ -57,29 +63,13 @@ class App extends Component {
     })
   }
 
-   signInHandler = (signInData) => {
-     alert ("logged in")
-  //   alert("sign in function")
-  //   var j = this.state.customerlist.length
+  signInHandler = (copyState) => {
+    //  alert ("logged in")
+    this.setState({
+      copyState
+    })
+    this.signIn()
 
-  //   for (let i = 0; i < j; j++) {
-  //     let t = this.state.customerlist[i].email
-  //     if (t === signInData.email) {
-
-  //       var copyState = this.state
-  //       copyState.customer.firstName = signInData.firstName
-  //       copyState.customer.secondName = signInData.secondName
-  //       copyState.customer.email = signInData.email
-  //       copyState.customer.password = signInData.password
-
-  //       this.setState({
-  //         copyState
-  //       })
-  //       this.signIn()
-
-  //     }
-
-  //   }
   }
 
   state = {
@@ -227,84 +217,48 @@ class App extends Component {
     return (
 
       <div className="outerdiv">
-
-        <div class="container">
-          <div className="maindiv">
-            <div className="row banner darkyellow">
-              <Header />
-            </div>
-          </div>
+<div className="darkyellow">
+        <div className="row banner">
+          <Header />
         </div>
+        </div>
+
         {this.state.customer.firstName} {this.state.customer.secondName} {this.state.customer.email} {this.state.customer.password}
-        <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12 centered">
 
-          <row>
-            <div className="buttonsRow">
-              <Buttonsrow
-                copyState={this.state}
-                loggedIn={this.state.loggedIn}
-                login={this.state.login}
-                displayIfLoggedIn={this.state.displayIfLoggedIn}
-                displayIfLoggedOut={this.state.displayIfLoggedOut}
-                buttonHandlerFunction={this.buttonHandler}
-                customer={this.state.customer}
-                registerHandlerFunction={this.registerHandler}
-              />
-            </div>
-          </row>
-
-
-
-          <div className="maindiv">
-            <div class="container">
-              <div className="row innerarea centered">
-
-
-
-                {
-                  this.state.jb.map((item, i) => {
-                    return <Productsmall
-                      indexkey={i}
-                      jb={this.state.jb[i]}
-
-                      buttonHandlerFunction={this.buttonHandler}
-                    />
-                  })
-                }
-                {/* <element className={this.state.signInPageVisible}> */}
-
-                {/* </element> */}
-
-
-
-
-              </div>
-            </div>
-          </div>
-
-
-
-
-
-          <div className="row">
-            <div className="col-sm-12">
-              <Footer />
-            </div>
-          </div>
+        <div className="centered buttonsRow">
+          <Buttonsrow
+            copyState={this.state}
+            loggedIn={this.state.loggedIn}
+            login={this.state.login}
+            displayIfLoggedIn={this.state.displayIfLoggedIn}
+            displayIfLoggedOut={this.state.displayIfLoggedOut}
+            buttonHandlerFunction={this.buttonHandler}
+            customer={this.state.customer}
+            registerHandlerFunction={this.registerHandler}
+          />
         </div>
 
+        <div class="container maindiv">
+          <div class="row justify-content-md-center">
 
-        {/* <div className="hide">
-          <Register 
-          buttonHandlerFunction={this.buttonHandler}
-          />
-        </div> */}
+              {
+                this.state.jb.map((item, i) => {
+                  return <Productsmall
+                    indexkey={i}
+                    jb={this.state.jb[i]}
+                    buttonHandlerFunction={this.buttonHandler}
+                  />
+                })
+              }
 
+            </div>
+          </div>
 
+        <div>
+          <Footer />
+        </div>
 
       </div >
-
-
 
 
     );

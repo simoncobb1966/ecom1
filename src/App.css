@@ -52,6 +52,7 @@ background-color: #1eff00;
 
 .darkyellow {
   background-color: hsl(54, 100%, 58%);
+  /* opacity: 0.5; */
 }
 
 .normal {

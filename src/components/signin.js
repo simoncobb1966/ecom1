@@ -5,11 +5,11 @@ import Modal from 'react-bootstrap/Modal'
 class SignIn extends Component {
 
   constructor(props, context) {
-    super(props, context);
+     super(props, context);
 
     this.state = {
       show: false,
-      errorMessage: "",
+      errorMessage: '',
       email: '',
       password: ''
     };
@@ -29,92 +29,101 @@ class SignIn extends Component {
   }
 
   handleClose(event) {
-    this.setState({ show: false });
+    this.setState({
+      show: false,
+      errorMessage: ''
+    });
   }
 
   handleShow() {
-    this.setState({ show: true });
+    this.setState({ show: true,
+      errorMessage: ''
+     });
   }
 
   handleSubmit = (event) => {
-    var registerData = {
+    var data = {
       email: this.state.email,
       password: this.state.password
     }
-    if (registerData.email === "" || registerData.password === "") {
+    if (data.email === "" || data.password === "") {
       this.setState({ errorMessage: "All fields need to be complete" })
     } else {
-      this.signInHandler(registerData)
-      // this.handleClose()
-    }
-  }
+  //     this.signInHandler(registerData)
+  //   }
+  // }
 
 
-  signInHandler = (data) => {
-    var j = this.props.copyState.customerList.length-1
-        for (let i = 0; i < j; i++) {
-      let t = this.props.copyState.customerList[i].email
-      if (t === data.email) {
-        this.props.copyState.customer.firstName = this.props.copyState.customerList[i].firstName
-        this.props.copyState.customer.secondName = this.props.copyState.customerList[i].secondName
-        this.props.copyState.customer.email = this.props.copyState.customerList[i].email
-        this.props.copyState.customer.password = this.props.copyState.customerList[i].password
-
-        this.props.buttonHandlerFunction("signIn",this.props.copyState)
-        this.handleClose()
+  // signInHandler = (data) => {
+    var em = "Email Address Not Found"
+    var j = this.props.copyState.customerList.length - 1
+    for (let i = 0; i < j; i++) {
+      let e = this.props.copyState.customerList[i].email
+      let p = this.props.copyState.customerList[i].password
+      if (e === data.email) {
+        em = "Password Incorrect"
+        if (p === data.password) {
+          this.props.copyState.customer.firstName = this.props.copyState.customerList[i].firstName
+          this.props.copyState.customer.secondName = this.props.copyState.customerList[i].secondName
+          this.props.copyState.customer.email = this.props.copyState.customerList[i].email
+          this.props.copyState.customer.password = this.props.copyState.customerList[i].password
+          this.props.buttonHandlerFunction("signIn", this.props.copyState)
+          // this.setState({ errorMessage: "" })
+          this.handleClose()
         }
+      }
+      this.setState({ errorMessage: em })
     }
-    this.setState({ errorMessage: "details not found" })
+  }
   }
 
 
-
-  render() {
-    return (
-      <>
-      <element>
-      <element className='buttonRowButton {this.props.displayIfLoggedOut}' >
-        <Button onClick={this.handleShow} variant="contained" color="primary">
-          Sign In
-        </Button>
-        </element>
-
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Sign in to James Bond Shop</Modal.Title>
-          </Modal.Header>
-
-          <form onSubmit={this.handleSubmit} className="createAccount">
-            <input type="text" name="email"
-              placeholder="Enter your email"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <input type="text" name="password"
-              placeholder="Enter your password"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-
-            <p className="redText centered">{this.state.errorMessage}</p>
-
-            <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleClose}>
-                Cancel
-            </Button>
-              <Button onClick={this.handleSubmit} variant="primary" >
+    render() {
+      return (
+        <>
+          <element>
+            <element className='buttonRowButton {this.props.displayIfLoggedOut}' >
+              <Button onClick={this.handleShow} variant="contained" color="primary">
                 Sign In
-            </Button>
-            </Modal.Footer>
-          </form>
-        </Modal>
-        </element>
-      </>
-    );
-  }
-}
+        </Button>
+            </element>
 
-export default SignIn;
+            <Modal show={this.state.show} onHide={this.handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Sign in to James Bond Shop</Modal.Title>
+              </Modal.Header>
+
+              <form onSubmit={this.handleSubmit} className="createAccount">
+                <input type="text" name="email"
+                  placeholder="Enter your email"
+                  onChange={this.handleChange}
+                  className="form-control registerTextBox">
+                </input>
+                <input type="text" name="password"
+                  placeholder="Enter your password"
+                  onChange={this.handleChange}
+                  className="form-control registerTextBox">
+                </input>
+
+                <p className="redText centered">{this.state.errorMessage}</p>
+
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={this.handleClose}>
+                    Cancel
+            </Button>
+                  <Button onClick={this.handleSubmit} variant="primary" >
+                    Sign In
+            </Button>
+                </Modal.Footer>
+              </form>
+            </Modal>
+          </element>
+        </>
+      );
+    }
+  }
+
+  export default SignIn;
 
 
 
@@ -128,7 +137,7 @@ export default SignIn;
 
 
 
-  
+
 //     render() {
 //   return (
 // <div>
