@@ -44,11 +44,29 @@ class SignIn extends Component {
     if (registerData.email === "" || registerData.password === "") {
       this.setState({ errorMessage: "All fields need to be complete" })
     } else {
-      this.props.registerHandlerFunction(registerData)
-    this.handleClose()
+      this.signInHandler(registerData)
+      // this.handleClose()
     }
-
   }
+
+
+  signInHandler = (data) => {
+    var j = this.props.copyState.customerList.length-1
+        for (let i = 0; i < j; i++) {
+      let t = this.props.copyState.customerList[i].email
+      if (t === data.email) {
+        this.props.copyState.customer.firstName = this.props.copyState.customerList[i].firstName
+        this.props.copyState.customer.secondName = this.props.copyState.customerList[i].secondName
+        this.props.copyState.customer.email = this.props.copyState.customerList[i].email
+        this.props.copyState.customer.password = this.props.copyState.customerList[i].password
+
+        this.props.buttonHandlerFunction("signIn",this.props.copyState)
+        this.handleClose()
+        }
+    }
+    this.setState({ errorMessage: "details not found" })
+  }
+
 
 
   render() {
@@ -84,7 +102,6 @@ class SignIn extends Component {
               <Button variant="secondary" onClick={this.handleClose}>
                 Cancel
             </Button>
-              {/* <Button type="submit" value="Submit" name="submit" variant="primary" onClick={this.handleClose}> */}
               <Button onClick={this.handleSubmit} variant="primary" >
                 Sign In
             </Button>

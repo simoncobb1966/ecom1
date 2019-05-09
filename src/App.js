@@ -13,23 +13,22 @@ class App extends Component {
 
   registerHandler = (customer) => {
     var copyState = this.state
- copyState.customer.firstName=customer.firstName
- copyState.customer.secondName=customer.secondName
- copyState.customer.email=customer.email
- copyState.customer.password=customer.password
+    copyState.customer.firstName = customer.firstName
+    copyState.customer.secondName = customer.secondName
+    copyState.customer.email = customer.email
+    copyState.customer.password = customer.password
 
-this.setState({
-  copyState
-})
-this.signIn()
+    this.setState({
+      copyState
+    })
+    this.signIn()
   }
-
 
 
   buttonHandler = (name, event) => {
     //  alert(name)
     if (name === "signIn") {
-      this.signIn()
+      this.signInHandler(event)
     }
     if (name === "signOut") {
       this.signOut()
@@ -58,12 +57,50 @@ this.signIn()
     })
   }
 
+   signInHandler = (signInData) => {
+     alert ("logged in")
+  //   alert("sign in function")
+  //   var j = this.state.customerlist.length
+
+  //   for (let i = 0; i < j; j++) {
+  //     let t = this.state.customerlist[i].email
+  //     if (t === signInData.email) {
+
+  //       var copyState = this.state
+  //       copyState.customer.firstName = signInData.firstName
+  //       copyState.customer.secondName = signInData.secondName
+  //       copyState.customer.email = signInData.email
+  //       copyState.customer.password = signInData.password
+
+  //       this.setState({
+  //         copyState
+  //       })
+  //       this.signIn()
+
+  //     }
+
+  //   }
+  }
 
   state = {
     login: false,
     displayIfLoggedIn: "hide",
     displayIfLoggedOut: "display",
-    
+
+    customerList: [{
+      firstName: "Simon",
+      secondName: "Cobb",
+      email: "simoncobb1966@gmail.com",
+      password: "bradford1"
+    },
+    {
+      firstName: "Gill",
+      secondName: "Cobb",
+      email: "gill@cobb.com",
+      password: "gillian"
+    }
+    ],
+
     customer: {
       firstName: "",
       secondName: "",
@@ -186,7 +223,7 @@ this.signIn()
   }
 
   render() {
-    
+
     return (
 
       <div className="outerdiv">
@@ -198,13 +235,13 @@ this.signIn()
             </div>
           </div>
         </div>
-{this.state.customer.firstName} {this.state.customer.secondName} {this.state.customer.email} {this.state.customer.password}
+        {this.state.customer.firstName} {this.state.customer.secondName} {this.state.customer.email} {this.state.customer.password}
         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12 centered">
 
           <row>
             <div className="buttonsRow">
               <Buttonsrow
-              copystate={this.state}
+                copyState={this.state}
                 loggedIn={this.state.loggedIn}
                 login={this.state.login}
                 displayIfLoggedIn={this.state.displayIfLoggedIn}

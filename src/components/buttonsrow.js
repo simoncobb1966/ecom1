@@ -14,21 +14,23 @@ class Buttonsrow extends Component {
                          */}
 
 
-                        <span className="buttonRowButton">
+                        <span>
 
-                        <Signin signInHandlerFunction={this.props.signinHandler}
-                        copystate={this.props.state}
+                        <Signin 
+                        copyState={this.props.copyState}
+                        buttonHandlerFunction={this.props.buttonHandlerFunction}
                          />
                        
                         <Register 
                         registerHandlerFunction={this.props.registerHandlerFunction}
                         displayIfLoggedOut={this.props.displayIfLoggedOut}
+
                         /></span>
                     </div>
 
 
                 <div className={this.props.displayIfLoggedIn}>
-                    <Button type="submit" onClick={() => this.props.buttonHandlerFunction("signOut")} variant="contained" color="primary">Sign Out {this.props.copystate.customer.firstName}</Button>
+                    <Button type="submit" onClick={() => this.props.buttonHandlerFunction("signOut")} variant="contained" color="primary">Sign Out {this.props.copyState.customer.firstName}</Button>
                 </div>
 
             </div>
