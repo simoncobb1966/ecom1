@@ -10,6 +10,32 @@
   display: inline
 }
 
+
+.buttonright {
+display: flex;
+justify-content: space-between;
+padding-right:5%;
+padding-left: 5%;
+padding-top: 1%;
+padding-bottom: 1%;
+}
+
+.shoppingbasket-right {
+  text-align: right;
+margin-right:30px
+}
+
+.shoppingbasket {
+  margin-left: 15px;
+  padding-left: 15px;
+  background-color: greenyellow; 
+}
+
+.badge-spaced {
+  margin-bottom: 5px;
+  margin-top: 5px; 
+}
+
 .registerTextBox {
 margin-top: 20px;
 margin-bottom: 20px;

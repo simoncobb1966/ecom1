@@ -6,9 +6,46 @@ import Productsmall from './components/productSmall';
 import Buttonsrow from './components/buttonsrow';
 // import SignIn from './components/signin'
 // import { element } from 'prop-types';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 
 class App extends Component {
+
+removeFromBasket=(sku)=>{
+  // alert("remove from basket in app" + sku)
+  var copyState = this.state
+  var tempTasks = copyState.basket.filter(function (elem) {
+    return (sku !== elem.sku);
+  })
+  copyState.basket=tempTasks
+  this.setState({
+    copyState
+  })
+}
+
+  addtobasketdvd = (sku) => {
+    // alert("add to basket")
+    let flag = false
+    var copyState = this.state
+    for (let i = 0; i < copyState.basket.length; i++) {
+      if (sku === copyState.basket[i].sku) {
+        copyState.basket[i].qty = copyState.basket[i].qty + 1
+        flag = true
+      }
+    }
+    if (!flag) {
+      var item = {
+        qty: 1,
+        sku: sku
+      }
+      copyState.basket.push(item)
+    }
+
+    this.setState({
+      copyState
+    })
+  }
+
+
 
   registerHandler = (customer) => {
     var copyState = this.state
@@ -25,7 +62,13 @@ class App extends Component {
 
 
   buttonHandler = (name, event) => {
-    //  alert(name)
+    // alert(name)
+    if (name==="removeFromBasket") {
+      this.removeFromBasket(event)
+    }
+    if (name === "addtobasketdvd") {
+      this.addtobasketdvd(event)
+    }
     if (name === "signIn") {
       this.signInHandler(event)
     }
@@ -77,6 +120,9 @@ class App extends Component {
     displayIfLoggedIn: "hide",
     displayIfLoggedOut: "display",
 
+    basket: [
+    ],
+
     customerList: [{
       firstName: "Simon",
       secondName: "Cobb",
@@ -101,9 +147,10 @@ class App extends Component {
     signInPageVisible: "hide",
     jb: [{
       title: "Doctor No",
+      sku: "JB01",
       image: "doctor_no.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -112,9 +159,10 @@ class App extends Component {
 
     {
       title: "From Russia with love",
+      sku: "JB02",
       image: "russia_with_love.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -123,9 +171,10 @@ class App extends Component {
 
     {
       title: "Goldfinger",
+      sku: "JB03",
       image: "goldfinger.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -134,9 +183,10 @@ class App extends Component {
 
     {
       title: "Thunderball",
+      sku: "JB04",
       image: "thunderball.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -145,9 +195,10 @@ class App extends Component {
 
     {
       title: "You Only Live Twice",
+      sku: "JB05",
       image: "live_twice.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -156,9 +207,10 @@ class App extends Component {
 
     {
       title: "O.H.M.S.S.",
+      sku: "JB06",
       image: "ohmss.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -167,9 +219,10 @@ class App extends Component {
 
     {
       title: "Diamonds Are Forever",
+      sku: "JB07",
       image: "diamonds_for_ever.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -178,9 +231,10 @@ class App extends Component {
 
     {
       title: "Live & Let Die",
+      sku: "JB08",
       image: "live_let_die.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -189,9 +243,10 @@ class App extends Component {
 
     {
       title: "The Man With The Golden Gun",
+      sku: "JB09",
       image: "golden_gun.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -200,9 +255,10 @@ class App extends Component {
 
     {
       title: "The Spy Who Loved Me",
+      sku: "JB10",
       image: "spy_loved_me.jpg",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et metus.",
-      pricedvd: 9.99,
+      price: 9.99,
       priceblu: 14.99,
       stockdvd: 55,
       stockblu: 23,
@@ -217,10 +273,10 @@ class App extends Component {
     return (
 
       <div className="outerdiv">
-<div className="darkyellow">
-        <div className="row banner">
-          <Header />
-        </div>
+        <div className="darkyellow">
+          <div className="row banner">
+            <Header />
+          </div>
         </div>
 
         {this.state.customer.firstName} {this.state.customer.secondName} {this.state.customer.email} {this.state.customer.password}
@@ -241,18 +297,19 @@ class App extends Component {
         <div class="container maindiv">
           <div class="row justify-content-md-center">
 
-              {
-                this.state.jb.map((item, i) => {
-                  return <Productsmall
-                    indexkey={i}
-                    jb={this.state.jb[i]}
-                    buttonHandlerFunction={this.buttonHandler}
-                  />
-                })
-              }
+            {
+              this.state.jb.map((item, i) => {
+                return <Productsmall
+                  indexkey={item.sku}
+                  jb={this.state.jb[i]}
+                  copyState={this.state}
+                  buttonHandlerFunction={this.buttonHandler}
+                />
+              })
+            }
 
-            </div>
           </div>
+        </div>
 
         <div>
           <Footer />

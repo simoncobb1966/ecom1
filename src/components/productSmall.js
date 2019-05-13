@@ -8,6 +8,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 class ProductSmall extends Component {
 
+    addtobasket = () => {
+          this.props.buttonHandlerFunction("addtobasketdvd",this.props.indexkey)
+        }
+
     handleClickOpen = () => {
         this.setState({ open: true });
     };
@@ -51,7 +55,7 @@ class ProductSmall extends Component {
         var dir = require('./images/product/' + this.props.jb.image);
 
         return (
-            
+
             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 
                 <Dialog
@@ -80,24 +84,29 @@ class ProductSmall extends Component {
                     </DialogActions>
                 </Dialog>
 
-                <div onClick={this.handleClickOpen} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} className={this.state.hover}>
+                <div onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} className={this.state.hover}>
 
-                    <div className="productnamebox">
+                    <div onClick={this.handleClickOpen} className="productnamebox">
                         <h4 className="{this.title()} title">{this.props.jb.title}</h4>
                     </div>
 
                     <div>
-                        <img className="thumbnail img-fluid centered" src={dir} alt={this.props.jb.title}></img>
+                        <img onClick={this.handleClickOpen} className="thumbnail img-fluid centered" src={dir} alt={this.props.jb.title}></img>
                     </div>
 
                     <div className="small-description">
-                        <p>{this.props.jb.synopsis.slice(0, 70)}</p>
-                        <span className="dotdotbuton"><Button size="small" color="primary" className="dotdotbuton">........</Button></span>
+                        {this.props.jb.synopsis.slice(0, 70)}
+                        <span className="dotdotbuton"><Button onClick={this.handleClickOpen} size="small" color="primary" className="dotdotbuton">........</Button></span>
                     </div>
-                    <div>
-                        <button type="button" class="btn btn-danger buttona">Buy DVD</button>
-                        <button type="button" class="btn btn-primary buttona">BluRay</button>
-                    </div>
+                    <div className="centered"> 
+
+                        <button name="addtobasketdvd" onClick={this.addtobasket} type="button" className="btn btn-danger badge-spaced">
+                            Add DVD to basket <span class="badge badge-light">£9.99</span>
+                        </button>
+                        <button type="button" className="btn btn-primary badge-spaced">
+                            Add BluRay to basket <span class="badge badge-light">£12.99</span>
+                        </button>
+                     </div> 
 
                 </div>
             </div>
