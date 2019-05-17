@@ -46,6 +46,7 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.0",
     "react-bootstrap": "^1.0.0-beta.8",
+    "react-country-region-selector": "^1.4.3",
     "react-dev-utils": "^9.0.0",
     "react-dom": "^16.8.6",
     "react-flags-select": "^1.1.10",

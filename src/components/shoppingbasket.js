@@ -16,6 +16,10 @@ class Shoppingbasket extends Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
+checkout=()=>{
+  
+}
+
   handleClose(event) {
     this.setState({
       show: false,
@@ -32,9 +36,8 @@ class Shoppingbasket extends Component {
 
 
 handleRemoveFromBasket = (i,event)=>{
-   this.props.buttonHandlerFunction("removeFromBasket", this.props.copyState.basket[i].sku)
+   this.props.buttonHandlerFunction("removeFromBasket", i)
 }
-
 
   render() {
 
@@ -45,13 +48,12 @@ handleRemoveFromBasket = (i,event)=>{
         var a = this.props.copyState.basket[i].sku
         var b = this.props.copyState.jb[j].sku
         if (a === b) {
-          var t = { qty: this.props.copyState.basket[i].qty, sku: j }
+          var t = { qty: this.props.copyState.basket[i].qty, sku: j, price:this.props.copyState.basket[i].price, format: this.props.copyState.basket[i].format}
           IDs.push(t)
           subTotalCost = subTotalCost + this.props.copyState.basket[i].qty * this.props.copyState.jb[j].price
         }
       }
     }
-
 
     return (
       <>
@@ -72,22 +74,24 @@ handleRemoveFromBasket = (i,event)=>{
             {
               IDs.map((item, i) => {
                 return <element className="buttonright">
-                {item.qty} x {this.props.copyState.jb[item.sku].title}
+                {item.qty} x {this.props.copyState.jb[item.sku].title}{" ("}
+                {item.format}{") @ £"}
+                {" "}{item.price}{" each."}
                 <button onClick={(evt) => this.handleRemoveFromBasket(i, evt)} type="button" name="remove" class="buttonRowButton btn btn-danger btn-smt">Remove</button>
                  </element>
                 
               })
             }
 
-
             <div className="shoppingbasket-right">Cost of goods = £{subTotalCost.toFixed(2)}</div>
-
-
-
 
             <Modal.Footer>
               <Button variant="secondary" onClick={this.handleClose}>
                 Close
+            </Button>
+
+            <Button variant="secondary" onClick={this.checkout}>
+                Checkout
             </Button>
 
             {/* <Checkout copyState={this.props.copyState}/> */}

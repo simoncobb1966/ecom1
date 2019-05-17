@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Modal from 'react-bootstrap/Modal'
+// import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 // done with Bootstrap modal
+import { CountryDropdown } from 'react-country-region-selector';
 class Register extends Component {
 
   constructor(props, context) {
     super(props, context);
+    
 
     this.state = {
       show: false,
@@ -13,13 +16,25 @@ class Register extends Component {
       firstName: '',
       secondName: '',
       email: '',
-      password: ''
+      password: '',
+      address1: '',
+      address2: '',
+      address3: '',
+      address4: '',
+      address5: '',
+      address6: '',
     };
+    this.state = { country: ''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  selectCountry (val) {
+    alert (val)
+    this.setState({ country: val });
   }
 
   handleChange = (event) => {
@@ -39,22 +54,43 @@ class Register extends Component {
   }
 
   handleSubmit = (event) => {
+    var errorMessage=""
     var registerData = {
       firstName: this.state.firstName,
       secondName: this.state.secondName,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      address1: this.state.address1,
+      address2: this.state.address2,
+      address3: this.state.address3,
+      address4: this.state.address4,
+      address5: this.state.address5,
+      address6: this.state.country,
     }
-    if (registerData.firstName === "" || registerData.secondName === "" || registerData.email === "" || registerData.password === "") {
-      this.setState({ errorMessage: "All fields need to be complete" })
-    } else {
+    errorMessage=this.checkAlreadyRegistered(registerData.email)
+    if (registerData.address6 || registerData.firstName === "" || registerData.secondName === "" || registerData.email === "" || registerData.password === "") {
+      errorMessage="All fields need to be complete" }
+      if (registerData.address6==="") {errorMessage="Please specify the country"}
+      if (errorMessage!==""){
+        this.setState({ errorMessage: errorMessage
+          })} else {
       this.props.buttonHandlerFunction("register", registerData)
     this.handleClose()
     }
-
   }
 
+checkAlreadyRegistered=(email)=>{
+  // alert (email)
+for (let i=0; i<this.props.copyState.customerList.length; i++){
+  if (this.props.copyState.customerList[i].email===email) {
+    return "Already registered, please use the log in button to log in"
+  } 
+}
+return ''
+}
+
   render() {
+    const { country } = this.state;
     return (
       <>
       <element>
@@ -81,7 +117,7 @@ class Register extends Component {
               className="form-control registerTextBox">
             </input>
             <input type="text" name="email"
-              placeholder="Enter your email"
+              placeholder="Enter your email address"
               onChange={this.handleChange}
               className="form-control registerTextBox">
             </input>
@@ -90,6 +126,37 @@ class Register extends Component {
               onChange={this.handleChange}
               className="form-control registerTextBox">
             </input>
+            <input type="text" name="address1"
+              placeholder="Enter the first line of your address"
+              onChange={this.handleChange}
+              className="form-control registerTextBox">
+            </input>
+            <input type="text" name="address2"
+              placeholder="Enter the second line of your address"
+              onChange={this.handleChange}
+              className="form-control registerTextBox">
+            </input>
+            <input type="text" name="address3"
+              placeholder="Enter the third line of your address"
+              onChange={this.handleChange}
+              className="form-control registerTextBox">
+            </input>
+            <input type="text" name="address4"
+              placeholder="Enter the fourth line of your address"
+              onChange={this.handleChange}
+              className="form-control registerTextBox">
+            </input>
+            <input type="text" name="address6"
+              placeholder="Enter your post code"
+              onChange={this.handleChange}
+              className="form-control registerTextBox">
+            </input>
+            <div>
+        <CountryDropdown 
+        //  priorityOptions={"United Kingdom"}
+          value={country}
+          onChange={(val) => this.selectCountry(val)} />
+      </div>
 
             <p className="redText centered">{this.state.errorMessage}</p>
 

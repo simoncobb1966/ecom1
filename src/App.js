@@ -5,10 +5,7 @@ import Footer from './components/footer';
 import Productsmall from './components/productSmall';
 import Buttonsrow from './components/buttonsrow';
 import FinaliseOrder from './components/finaliseorder';
-// import Checkout from './components/checkout';
-// import SignIn from './components/signin'
-// import { element } from 'prop-types';
-// import Button from '@material-ui/core/Button';
+
 
 class App extends Component {
 
@@ -16,22 +13,19 @@ checkout=(copyState)=>{
   this.setState({
     copyState
   })
-// new FinaliseOrder()
 }
 
 pay =(copyState)=>{
-  // this.copyState.basket=[]
   this.setState({
     copyState
   })
 }
 
 
-removeFromBasket=(sku)=>{
-  // alert("remove from basket in app" + sku)
+removeFromBasket=(basketItem)=>{
   var copyState = this.state
-  var tempTasks = copyState.basket.filter(function (elem) {
-    return (sku !== elem.sku);
+  var tempTasks = copyState.basket.filter(function (elem,i) {
+    return (i !== basketItem);
   })
   copyState.basket=tempTasks
   this.setState({
@@ -40,7 +34,6 @@ removeFromBasket=(sku)=>{
 }
 
   addtobasketdvd = (sku) => {
-    // alert("add to basket")
     let flag = false
     var copyState = this.state
     for (let i = 0; i < copyState.basket.length; i++) {
@@ -120,6 +113,7 @@ removeFromBasket=(sku)=>{
   buttonHandler = (name, event) => {
     // alert(name)
     if (name==="removeFromBasket") {
+      // alert ("event.format = ",event.format)
       this.removeFromBasket(event)
     }
     if (name === "addtobasketdvd") {

@@ -20,6 +20,7 @@ class Buttonsrow extends Component {
                         />
 
                         <Register
+                        copyState={this.props.copyState}
                             buttonHandlerFunction={this.props.buttonHandlerFunction}
                             displayIfLoggedOut={this.props.copyState.displayIfLoggedOut}
                         />
