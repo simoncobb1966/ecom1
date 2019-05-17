@@ -4,11 +4,20 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Productsmall from './components/productSmall';
 import Buttonsrow from './components/buttonsrow';
+import FinaliseOrder from './components/finaliseorder';
+// import Checkout from './components/checkout';
 // import SignIn from './components/signin'
 // import { element } from 'prop-types';
 // import Button from '@material-ui/core/Button';
 
 class App extends Component {
+
+checkout=(copyState)=>{
+  this.setState({
+    copyState
+  })
+// new FinaliseOrder()
+}
 
 removeFromBasket=(sku)=>{
   // alert("remove from basket in app" + sku)
@@ -27,15 +36,19 @@ removeFromBasket=(sku)=>{
     let flag = false
     var copyState = this.state
     for (let i = 0; i < copyState.basket.length; i++) {
-      if (sku === copyState.basket[i].sku) {
+      if (sku === copyState.basket[i].sku && copyState.basket[i].format==="DVD" ) {
         copyState.basket[i].qty = copyState.basket[i].qty + 1
         flag = true
       }
     }
     if (!flag) {
+      var index=this.getIndexFromSku(sku)
       var item = {
         qty: 1,
-        sku: sku
+        jbindex: index,
+        sku: sku,
+        price: copyState.jb[index].price,
+        format: "DVD"
       }
       copyState.basket.push(item)
     }
@@ -45,7 +58,42 @@ removeFromBasket=(sku)=>{
     })
   }
 
+  addtobasketblu = (sku) => {
+    // alert("add to basket")
+    let flag = false
+    var copyState = this.state
+    for (let i = 0; i < copyState.basket.length; i++) {
+      if (sku === copyState.basket[i].sku && copyState.basket[i].format==="Bluray") {
+        copyState.basket[i].qty = copyState.basket[i].qty + 1
+        flag = true
+      }
+    }
+    if (!flag) {
+    
+      var index=this.getIndexFromSku(sku)
+ 
+      var item = {
+        qty: 1,
+        jbindex: index,
+        sku: sku,
+        price: copyState.jb[index].priceblu,
+        format: "Bluray"
+      }
+      copyState.basket.push(item)
+    }
 
+    this.setState({
+      copyState
+    })
+  }
+
+  getIndexFromSku =(sku)=>{
+  
+    var index = this.state.jb.findIndex(productItem => {
+      return productItem.sku === sku
+  })
+  return index
+  }
 
   registerHandler = (customer) => {
     var copyState = this.state
@@ -69,6 +117,9 @@ removeFromBasket=(sku)=>{
     if (name === "addtobasketdvd") {
       this.addtobasketdvd(event)
     }
+    if (name === "addtobasketblu") {
+      this.addtobasketblu(event)
+    }
     if (name === "signIn") {
       this.signInHandler(event)
     }
@@ -76,7 +127,10 @@ removeFromBasket=(sku)=>{
       this.signOut()
     }
     if (name === "register") {
-      this.registerHandler()
+      this.registerHandler(event)
+    }
+    if (name === "checkout") {
+      this.checkout(event)
     }
   }
 
@@ -116,9 +170,9 @@ removeFromBasket=(sku)=>{
   }
 
   state = {
-    login: false,
-    displayIfLoggedIn: "hide",
-    displayIfLoggedOut: "display",
+    login: true,
+    displayIfLoggedIn: "display",
+    displayIfLoggedOut: "hide",
 
     basket: [
     ],
@@ -138,10 +192,16 @@ removeFromBasket=(sku)=>{
     ],
 
     customer: {
-      firstName: "",
-      secondName: "",
-      email: "",
-      password: ""
+      firstName: "Simon",
+      secondName: "Cobb",
+      email: "simoncobb1966@gmail.com",
+      password: "bradford1",
+      address1: "7 Fairhaven Ave",
+      address2: "Whitefield",
+      address3: "Manchester",
+      address4: "M45 7RG",
+      address5: "",
+      address6: "GB"
     }
     ,
     signInPageVisible: "hide",
@@ -279,24 +339,17 @@ removeFromBasket=(sku)=>{
           </div>
         </div>
 
-        {this.state.customer.firstName} {this.state.customer.secondName} {this.state.customer.email} {this.state.customer.password}
+        {this.state.customer.firstName} {this.state.customer.secondName} {this.state.customer.address1} {this.state.customer.address2} {this.state.customer.address3} {this.state.customer.address4} {this.state.customer.address5} {this.state.customer.address6}  {this.state.customer.email} {this.state.customer.password}
 
         <div className="centered buttonsRow">
           <Buttonsrow
             copyState={this.state}
-            loggedIn={this.state.loggedIn}
-            login={this.state.login}
-            displayIfLoggedIn={this.state.displayIfLoggedIn}
-            displayIfLoggedOut={this.state.displayIfLoggedOut}
             buttonHandlerFunction={this.buttonHandler}
-            customer={this.state.customer}
-            registerHandlerFunction={this.registerHandler}
           />
         </div>
 
         <div class="container maindiv">
           <div class="row justify-content-md-center">
-
             {
               this.state.jb.map((item, i) => {
                 return <Productsmall

@@ -10,6 +10,12 @@
   display: inline
 }
 
+ .customerName {
+  list-style-type: none;
+  line-height: 1.2;
+margin-left: 20px;
+  } 
+
 
 .buttonright {
 display: flex;
@@ -162,6 +168,11 @@ h4 {
   align-items: center;
   justify-content: center;
 }
+
+.signOutButton {
+     margin-right: 13px;
+    margin-left: 13px; 
+  }
 
 .buttona {
   margin-bottom: 5px;

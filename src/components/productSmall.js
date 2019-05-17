@@ -8,9 +8,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 class ProductSmall extends Component {
 
-    addtobasket = () => {
-          this.props.buttonHandlerFunction("addtobasketdvd",this.props.indexkey)
+    addtobasket = (button) => {
+        if (button==="dvd") {
+        this.props.buttonHandlerFunction("addtobasketdvd",this.props.indexkey,)
         }
+        if (button==="blu") {
+        this.props.buttonHandlerFunction("addtobasketblu",this.props.indexkey,)
+        }
+        }
+
+
 
     handleClickOpen = () => {
         this.setState({ open: true });
@@ -96,16 +103,16 @@ class ProductSmall extends Component {
 
                     <div className="small-description">
                         {this.props.jb.synopsis.slice(0, 70)}
-                        <span className="dotdotbuton"><Button onClick={this.handleClickOpen} size="small" color="primary" className="dotdotbuton">........</Button></span>
+                        <span className="dotdotbuton"><Button onClick={()=> this.handleClickOpen} size="small" color="primary" className="dotdotbuton">........</Button></span>
                     </div>
                     <div className="centered"> 
 
-                        <button name="addtobasketdvd" onClick={this.addtobasket} type="button" className="btn btn-danger badge-spaced">
-                            Add DVD to basket <span class="badge badge-light">£9.99</span>
+                        <button onClick={()=> this.addtobasket("dvd")} type="button" className="btn btn-danger badge-spaced">
+                            Add DVD to basket <span class="badge badge-light">£{this.props.jb.price}</span>
                         </button>
-                        <button type="button" className="btn btn-primary badge-spaced">
-                            Add BluRay to basket <span class="badge badge-light">£12.99</span>
-                        </button>
+                        <button onClick={()=> this.addtobasket("blu")} type="button" className="btn btn-primary badge-spaced">
+                            Add BluRay to basket <span class="badge badge-light">£{this.props.jb.priceblu}</span>
+                        </button> 
                      </div> 
 
                 </div>

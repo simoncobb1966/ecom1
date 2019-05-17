@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Modal from 'react-bootstrap/Modal'
+import Checkout from './checkout';
 // done with Bootstrap modal
 class Shoppingbasket extends Component {
 
@@ -31,10 +32,7 @@ class Shoppingbasket extends Component {
 
 
 handleRemoveFromBasket = (i,event)=>{
-  //  alert('remove in shopbask ' + i)
    this.props.buttonHandlerFunction("removeFromBasket", this.props.copyState.basket[i].sku)
-
-  // this.handleClose()
 }
 
 
@@ -59,8 +57,9 @@ handleRemoveFromBasket = (i,event)=>{
       <>
         <element>
 
-          <button name="addtobasket" onClick={this.handleShow} type="button" class="btn btn-primary">
-            Shopping Basket <span class="badge badge-light">{this.props.copyState.basket.length}</span>
+
+          <button onClick={this.handleShow} type="button" class="btn btn-primary signOutButton">
+            Shopping Basket <span className="badge badge-light ">{this.props.copyState.basket.length}</span>
           </button>
 
 
@@ -69,8 +68,6 @@ handleRemoveFromBasket = (i,event)=>{
               <Modal.Title>Your Shopping Basket</Modal.Title>
             </Modal.Header>
 
-{/* 
-            onClick={(evt) => this.handleRemoveFromBasket(id, evt)} */}
 
             {
               IDs.map((item, i) => {
@@ -82,17 +79,8 @@ handleRemoveFromBasket = (i,event)=>{
               })
             }
 
-            {/* {
-              IDs.map((item, i) => {
-                return <element className="buttonright">
-                {item.qty} x {this.props.copyState.jb[item.sku].title}
-                <button onClick={this.handleRemoveFromBasket} type="button" name="remove" class="buttonRowButton btn btn-danger btn-smt">Remove</button>
-                 </element>
-                
-              })
-            } */}
 
-            <div className="shoppingbasket-right">Cost of goods = £{subTotalCost}</div>
+            <div className="shoppingbasket-right">Cost of goods = £{subTotalCost.toFixed(2)}</div>
 
 
 
@@ -101,9 +89,9 @@ handleRemoveFromBasket = (i,event)=>{
               <Button variant="secondary" onClick={this.handleClose}>
                 Close
             </Button>
-              <Button onClick={this.handleSubmit} variant="primary" >
-                Checkout Now
-            </Button>
+
+            {/* <Checkout copyState={this.props.copyState}/> */}
+
             </Modal.Footer>
 
           </Modal>
@@ -113,6 +101,7 @@ handleRemoveFromBasket = (i,event)=>{
   }
 
 }
+
 
 
 export default Shoppingbasket;

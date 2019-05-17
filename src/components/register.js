@@ -48,7 +48,7 @@ class Register extends Component {
     if (registerData.firstName === "" || registerData.secondName === "" || registerData.email === "" || registerData.password === "") {
       this.setState({ errorMessage: "All fields need to be complete" })
     } else {
-      this.props.registerHandlerFunction(registerData)
+      this.props.buttonHandlerFunction("register", registerData)
     this.handleClose()
     }
 
@@ -97,7 +97,6 @@ class Register extends Component {
               <Button variant="secondary" onClick={this.handleClose}>
                 Cancel
             </Button>
-              {/* <Button type="submit" value="Submit" name="submit" variant="primary" onClick={this.handleClose}> */}
               <Button onClick={this.handleSubmit} variant="primary" >
                 Create Account
             </Button>

@@ -48,6 +48,7 @@
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dev-utils": "^9.0.0",
     "react-dom": "^16.8.6",
+    "react-flags-select": "^1.1.10",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",

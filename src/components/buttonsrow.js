@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Register from './register'
 import Signin from './signin'
 import Shoppingbasket from './shoppingbasket'
+import Checkout from './checkout'
 class Buttonsrow extends Component {
 
     render() {
@@ -11,7 +12,7 @@ class Buttonsrow extends Component {
 
         return (
             <div>
-                <div className={this.props.displayIfLoggedOut}>
+                <div className={this.props.copyState.displayIfLoggedOut}>
                     <span>
                         <Signin
                             copyState={this.props.copyState}
@@ -19,23 +20,25 @@ class Buttonsrow extends Component {
                         />
 
                         <Register
-                            registerHandlerFunction={this.props.registerHandlerFunction}
-                            displayIfLoggedOut={this.props.displayIfLoggedOut}
+                            buttonHandlerFunction={this.props.buttonHandlerFunction}
+                            displayIfLoggedOut={this.props.copyState.displayIfLoggedOut}
                         />
-
-                        {/* <Shoppingbasket copyState={this.props.copyState}
-                        buttonHandlerFunction={this.props.buttonHandlerFunction}
-                        /> */}
 
                     </span>
                 </div>
+                <span>
+                    <div className={this.props.copyState.displayIfLoggedIn}>
+                        <Button className="signOutButton" type="submit" onClick={() => this.props.buttonHandlerFunction("signOut")} variant="contained" color="primary" >Sign Out {this.props.copyState.customer.firstName}</Button>
 
-                <div className={this.props.displayIfLoggedIn}>
-                    <Button type="submit" onClick={() => this.props.buttonHandlerFunction("signOut")} variant="contained" color="primary" className="buttonRowButton">Sign Out {this.props.copyState.customer.firstName}</Button>
-                </div>
-                <Shoppingbasket copyState={this.props.copyState}
+                        <Checkout copyState={this.props.copyState}
+                            buttonHandlerFunction={this.props.buttonHandlerFunction} />
+                    </div>
+
+                    <Shoppingbasket copyState={this.props.copyState}
                         buttonHandlerFunction={this.props.buttonHandlerFunction}
-                        />
+                    />
+
+                </span>
             </div>
         )
     }
