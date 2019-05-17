@@ -19,6 +19,14 @@ checkout=(copyState)=>{
 // new FinaliseOrder()
 }
 
+pay =(copyState)=>{
+  // this.copyState.basket=[]
+  this.setState({
+    copyState
+  })
+}
+
+
 removeFromBasket=(sku)=>{
   // alert("remove from basket in app" + sku)
   var copyState = this.state
@@ -131,6 +139,9 @@ removeFromBasket=(sku)=>{
     }
     if (name === "checkout") {
       this.checkout(event)
+    }
+    if (name === "pay") {
+      this.pay(this.copyState)
     }
   }
 

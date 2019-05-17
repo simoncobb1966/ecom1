@@ -48,22 +48,11 @@ class Checkout extends Component {
         customer[5] = this.state.address5
         customer[6] = this.state.address6
         customer[7] = this.state.email
-        var newCustomer = []
-        let count = 0
-        for (let i = 0; i < 9; i++) {
-            if (customer[i] !== "") {
-                newCustomer[count] = customer[i]
-                count = count + 1
-            }
-        }
         this.setState({
-            customer: newCustomer,
-            customerLines: count
+            customer: customer,
+
         })
     }
-
-
-
 
     flagSelect = (country) => {
         this.setState({
@@ -126,33 +115,44 @@ class Checkout extends Component {
         let totalCost = 0
         let numberOfItems = 0
         for (let i = 0; i < this.props.copyState.basket.length; i++) {
-            totalCost = totalCost + (this.props.copyState.basket[i].qty * this.props.copyState.basket[i].price)              
+            totalCost = totalCost + (this.props.copyState.basket[i].qty * this.props.copyState.basket[i].price)
             numberOfItems = numberOfItems + this.props.copyState.basket[i].qty
         }
         return (<li className="customerName">Number of Items {numberOfItems}, Total Cost £{totalCost} - FREE SHIPPING</li>)
     }
 
+    checkForNull = (temp) => {
+        if (temp === "") { return "" }
+        return (<li className="customerName">{temp}</li>)
+    }
 
+    pay = () => {
+        this.props.copyState.basket = []
+        this.props.buttonHandlerFunction("pay")
+        this.handleClose()
+        
+    }
 
     render() {
 
         const tprice = this.totalPrice()
 
         const displayCustomerDetails = this.state.customer.map(item => {
-            return (<li className="customerName">{item}</li>)
+            return this.checkForNull(item)
         })
 
         const displayCustomerOrder = this.props.copyState.basket.map(item => {
             const sku = this.props.copyState.basket.findIndex(productItem => {
                 return productItem.sku === item.sku
             })
-            return (<li className="customerName">{item.qty}{" x "}{this.props.copyState.jb[sku].title} 
-            {" ("}{item.format}{") "}
-            {" @ £"}{item.price}{" each = £"}
+            return (<li className="customerName">{item.qty}{" x "}{this.props.copyState.jb[sku].title}
+                {" ("}{item.format}{") "}
+                {" @ £"}{item.price}{" each = £"}
                 {item.qty * item.price}
             </li>)
 
         })
+
 
 
         return (
@@ -228,7 +228,7 @@ class Checkout extends Component {
 
                         <div className={this.showmode1()}>
 
-                            <h1 centered> Confirm Order </h1>
+                            <h1 className="centered"> Confirm Order </h1>
 
                             {displayCustomerDetails}
                             <p></p>
@@ -237,30 +237,35 @@ class Checkout extends Component {
                             <p></p>
                             <hr></hr>
                             {tprice}
-                            <hr></hr>
-
-
+                          <p></p>
+                            <div className="centered">
+                                {/* < Button onClick={this.pay} variant="primary" > */}
+                                <Button onClick={this.pay} variant="contained" color="secondary" >
+                                    PAY NOW
+                                </Button>
+                                <p></p>
+                            </div>
 
                         </div>
 
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={this.handleClose}>
+                            <button variant="secondary" onClick={this.handleClose}>
                                 Close
-                            </Button>
+                            </button>
 
 
-                            <Button variant="secondary" onClick={this.confirmOrder}>
-                                Confirm Order
-                            </Button>
+                            <button variant="secondary" className={this.showmode0()} onClick={this.confirmOrder}>
+                                Confirm Order!
+                            </button>
 
                             {/* <FinaliseOrder
                                 copyState={this.props.copyState}
                                 buttonHandlerFunction={this.props.buttonHandlerFunction} 
                                 />  */}
 
-                            <Button onClick={this.handleSubmit} variant="primary" >
-                                Create Account
-            </Button>
+                            <button onClick={this.handleSubmit} variant="primary" className={this.showmode0()}>
+                                Create Account!
+            </button>
 
                         </Modal.Footer>
 
