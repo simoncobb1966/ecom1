@@ -8,7 +8,7 @@ class Register extends Component {
 
   constructor(props, context) {
     super(props, context);
-    
+
 
     this.state = {
       show: false,
@@ -24,7 +24,7 @@ class Register extends Component {
       address5: '',
       address6: '',
     };
-    this.state = { country: ''};
+    this.state = { country: '' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleShow = this.handleShow.bind(this);
@@ -32,8 +32,7 @@ class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  selectCountry (val) {
-    alert (val)
+  selectCountry(val) {
     this.setState({ country: val });
   }
 
@@ -53,8 +52,8 @@ class Register extends Component {
     this.setState({ show: true });
   }
 
-  handleSubmit = (event) => {
-    var errorMessage=""
+  handleSubmit = () => {
+    var errorMessage = ""
     var registerData = {
       firstName: this.state.firstName,
       secondName: this.state.secondName,
@@ -67,109 +66,136 @@ class Register extends Component {
       address5: this.state.address5,
       address6: this.state.country,
     }
-    errorMessage=this.checkAlreadyRegistered(registerData.email)
-    if (registerData.address6 || registerData.firstName === "" || registerData.secondName === "" || registerData.email === "" || registerData.password === "") {
-      errorMessage="All fields need to be complete" }
-      if (registerData.address6==="") {errorMessage="Please specify the country"}
-      if (errorMessage!==""){
-        this.setState({ errorMessage: errorMessage
-          })} else {
+
+    if (this.checkAlreadyRegistered(registerData.email) !== undefined) 
+    { errorMessage = this.checkAlreadyRegistered(registerData.email) }
+    else {
+    if (registerData.address6 === "") { errorMessage = "Please specify the country" }
+    if (registerData.address5 === undefined) { errorMessage = "Please specify the post code" }
+    if (registerData.address2 === undefined) { errorMessage = "Please specify the second line of your address" }
+    if (registerData.address1 === undefined) { errorMessage = "Please specify the first line of your address" }
+    if (registerData.password === undefined) { errorMessage = "Please specify your password" }
+    if (registerData.email === undefined) { errorMessage = "Please specify your email address" }
+    if (registerData.secondName === undefined) { errorMessage = "Please specify your second name" }
+    if (registerData.firstName === undefined) { errorMessage = "Please specify your first name" }
+   if (this.checkAlreadyRegistered(registerData.email) !== undefined) { errorMessage = this.checkAlreadyRegistered(registerData.email) }
+    } 
+   if (errorMessage !== "") {
+      this.setState({
+        errorMessage: errorMessage
+      })
+    } else {
       this.props.buttonHandlerFunction("register", registerData)
-    this.handleClose()
+      this.setState({
+      errorMessage: "",
+      firstName: '',
+      secondName: '',
+      email: '',
+      password: '',
+      address1: '',
+      address2: '',
+      address3: '',
+      address4: '',
+      address5: '',
+      address6: '',
+      })
+      this.handleClose()
     }
   }
 
-checkAlreadyRegistered=(email)=>{
-  // alert (email)
-for (let i=0; i<this.props.copyState.customerList.length; i++){
-  if (this.props.copyState.customerList[i].email===email) {
-    return "Already registered, please use the log in button to log in"
-  } 
-}
-return ''
-}
+
+  checkAlreadyRegistered = (email) => {
+    for (let i = 0; i < this.props.copyState.customerList.length; i++) {
+      if (this.props.copyState.customerList[i].email === email) {
+        return "Already registered, please use the SIGN IN button to log in"
+      }
+    }
+    return ''
+  }
 
   render() {
     const { country } = this.state;
+
     return (
       <>
-      <element>
-      <element className='buttonRowButton {this.props.displayIfLoggedOut}' >
-        <Button onClick={this.handleShow} variant="contained" color="primary">
-          Register
+        <element>
+          <element className='buttonRowButton {this.props.displayIfLoggedOut}' >
+            <Button onClick={this.handleShow} variant="contained" color="primary">
+              Register
         </Button>
-        </element>
+          </element>
 
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Create an Account</Modal.Title>
-          </Modal.Header>
+          <Modal show={this.state.show} onHide={this.handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Create an Account</Modal.Title>
+            </Modal.Header>
 
-          <form onSubmit={this.handleSubmit} className="createAccount">
-            <input type="text" name="firstName"
-              placeholder="Enter first name"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <input type="text" name="secondName"
-              placeholder="Enter second name"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <input type="text" name="email"
-              placeholder="Enter your email address"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <input type="text" name="password"
-              placeholder="Enter your password"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <input type="text" name="address1"
-              placeholder="Enter the first line of your address"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <input type="text" name="address2"
-              placeholder="Enter the second line of your address"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <input type="text" name="address3"
-              placeholder="Enter the third line of your address"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <input type="text" name="address4"
-              placeholder="Enter the fourth line of your address"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <input type="text" name="address6"
-              placeholder="Enter your post code"
-              onChange={this.handleChange}
-              className="form-control registerTextBox">
-            </input>
-            <div>
-        <CountryDropdown 
-        //  priorityOptions={"United Kingdom"}
-          value={country}
-          onChange={(val) => this.selectCountry(val)} />
-      </div>
+            <form className="createAccount">
+              <input type="text" name="firstName"
+                placeholder="Enter first name"
+                onChange={this.handleChange}
+                className="form-control registerTextBox">
+              </input>
+              <input type="text" name="secondName"
+                placeholder="Enter second name"
+                onChange={this.handleChange}
+                className="form-control registerTextBox">
+              </input>
+              <input type="text" name="email"
+                placeholder="Enter your email address"
+                onChange={this.handleChange}
+                className="form-control registerTextBox">
+              </input>
+              <input type="text" name="password"
+                placeholder="Enter your password"
+                onChange={this.handleChange}
+                className="form-control registerTextBox">
+              </input>
+              <input type="text" name="address1"
+                placeholder="Enter the first line of your address"
+                onChange={this.handleChange}
+                className="form-control registerTextBox">
+              </input>
+              <input type="text" name="address2"
+                placeholder="Enter the second line of your address"
+                onChange={this.handleChange}
+                className="form-control registerTextBox">
+              </input>
+              <input type="text" name="address3"
+                placeholder="Enter the third line of your address"
+                onChange={this.handleChange}
+                className="form-control registerTextBox">
+              </input>
+              <input type="text" name="address4"
+                placeholder="Enter the fourth line of your address"
+                onChange={this.handleChange}
+                className="form-control registerTextBox">
+              </input>
+              <input type="text" name="address5"
+                placeholder="Enter your post code"
+                onChange={this.handleChange}
+                className="form-control registerTextBox">
+              </input>
+              <div>
+                <CountryDropdown
+                  //  priorityOptions={"United Kingdom"}
+                  value={country}
+                  onChange={(val) => this.selectCountry(val)} />
+              </div>
 
-            <p className="redText centered">{this.state.errorMessage}</p>
+              <p className="redText centered">{this.state.errorMessage}</p>
 
-            <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleClose}>
-                Cancel
+              <Modal.Footer>
+                <Button variant="secondary" onClick={this.handleClose}>
+                  Cancel
             </Button>
-              <Button onClick={this.handleSubmit} variant="primary" >
-                Create Account
+                <Button onClick={this.handleSubmit} variant="primary" >
+                  Create Account
             </Button>
-            </Modal.Footer>
-          </form>
-        </Modal>
+
+              </Modal.Footer>
+            </form>
+          </Modal>
         </element>
       </>
     );

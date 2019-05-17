@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Modal from 'react-bootstrap/Modal'
-import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/css/react-flags-select.css';
 import FinaliseOrder from './finaliseorder'
 import { number } from 'prop-types';
@@ -213,12 +212,12 @@ class Checkout extends Component {
                                     onChange={this.handleChange}
                                     className="form-control registerTextBox">
                                 </input>
+                                <input type="text" name="address6"
+                                    placeholder={this.props.copyState.customer.address6}
+                                    onChange={this.handleChange}
+                                    className="form-control registerTextBox">
+                                </input>
 
-                                <ReactFlagsSelect
-                                    name="address6"
-                                    defaultCountry={this.props.copyState.customer.address6}
-                                    onSelect={this.flagSelect}
-                                />
 
 
                                 <p className="redText centered">{this.state.errorMessage}</p>

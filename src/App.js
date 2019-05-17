@@ -102,6 +102,12 @@ removeFromBasket=(basketItem)=>{
     copyState.customer.secondName = customer.secondName
     copyState.customer.email = customer.email
     copyState.customer.password = customer.password
+    copyState.customer.address1 = customer.address1
+    copyState.customer.address2 = customer.address2
+    copyState.customer.address3 = customer.address3
+    copyState.customer.address4 = customer.address4
+    copyState.customer.address5 = customer.address5
+    copyState.customer.address6 = customer.address6
 
     this.setState({
       copyState
@@ -150,6 +156,12 @@ removeFromBasket=(basketItem)=>{
     copyState.displayIfLoggedIn = "hide"
     copyState.displayIfLoggedOut = "display"
     copyState.login = false
+    copyState.customer.address1 = ""
+    copyState.customer.address2 = ""
+    copyState.customer.address3 = ""
+    copyState.customer.address4 = ""
+    copyState.customer.address5 = ""
+    copyState.customer.address6 = ""
     this.setState({
       copyState
     })
@@ -186,7 +198,13 @@ removeFromBasket=(basketItem)=>{
       firstName: "Simon",
       secondName: "Cobb",
       email: "simoncobb1966@gmail.com",
-      password: "bradford1"
+      password: "bradford1",
+      address1: "7 Fairhaven Avenue",
+      address2: "Whitefield",
+      address3: "Manchester",
+      address4: "",
+      address5: "M45 7QG",
+      address6: "United Kingdom"
     },
     {
       firstName: "Gill",

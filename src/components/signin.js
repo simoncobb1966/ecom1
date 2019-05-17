@@ -67,6 +67,13 @@ class SignIn extends Component {
           this.props.copyState.customer.secondName = this.props.copyState.customerList[i].secondName
           this.props.copyState.customer.email = this.props.copyState.customerList[i].email
           this.props.copyState.customer.password = this.props.copyState.customerList[i].password
+          this.props.copyState.customer.address1 = this.props.copyState.customerList[i].address1
+          this.props.copyState.customer.address2 = this.props.copyState.customerList[i].address2
+          this.props.copyState.customer.address3 = this.props.copyState.customerList[i].address3
+          this.props.copyState.customer.address4 = this.props.copyState.customerList[i].address4
+          this.props.copyState.customer.address5 = this.props.copyState.customerList[i].address5
+          this.props.copyState.customer.address6 = this.props.copyState.customerList[i].address6
+
           this.props.buttonHandlerFunction("signIn", this.props.copyState)
           // this.setState({ errorMessage: "" })
           this.handleClose()
