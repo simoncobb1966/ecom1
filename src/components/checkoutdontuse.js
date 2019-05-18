@@ -11,6 +11,7 @@ class Checkout extends Component {
 
         this.state = {
             show: false,
+            customer: {
             firstName: this.props.copyState.customer.firstName,
             secondName: this.props.copyState.customer.secondName,
             email: this.props.copyState.customer.email,
@@ -20,8 +21,9 @@ class Checkout extends Component {
             address4: this.props.copyState.customer.address4,
             address5: this.props.copyState.customer.address5,
             address6: "GB",
+            },
             mode: 0,
-            customer: [],
+            // customer: [],
             customerLines: 0
         };
 
@@ -36,6 +38,17 @@ class Checkout extends Component {
         this.setState({
             mode: 1
         })
+
+        this.props.copyState.customer.firstName = this.state.customer.firstName
+        this.props.copyState.customer.secondName = this.state.customer.secondName
+        this.props.copyState.customer.email = this.state.customer.email
+        this.props.copyState.customer.address1 = this.state.customer.address1
+        this.props.copyState.customer.address2 = this.state.customer.address2
+        this.props.copyState.customer.address3 = this.state.customer.address3
+        this.props.copyState.customer.address4 = this.state.customer.address4
+        this.props.copyState.customer.address5 = this.state.customer.address5
+        this.props.copyState.customer.address6 = this.state.customer.address6
+
         var customer = []
         customer[0] = this.state.firstName + " " + this.state.secondName
         customer[1] = this.state.address1
@@ -45,13 +58,8 @@ class Checkout extends Component {
         customer[5] = this.state.address5
         customer[6] = this.state.address6
         customer[7] = this.state.email
-
-if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName+" "+this.props.copyState.customer.secondName}
-
-
         this.setState({
             customer: customer,
-
         })
     }
 
@@ -219,8 +227,6 @@ if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName
                                     onChange={this.handleChange}
                                     className="form-control registerTextBox">
                                 </input>
-
-
 
                                 <p className="redText centered">{this.state.errorMessage}</p>
                             </form>

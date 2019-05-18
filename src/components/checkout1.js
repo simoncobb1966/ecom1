@@ -45,10 +45,6 @@ class Checkout extends Component {
         customer[5] = this.state.address5
         customer[6] = this.state.address6
         customer[7] = this.state.email
-
-if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName+" "+this.props.copyState.customer.secondName}
-
-
         this.setState({
             customer: customer,
 

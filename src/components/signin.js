@@ -49,12 +49,6 @@ class SignIn extends Component {
     if (data.email === "" || data.password === "") {
       this.setState({ errorMessage: "All fields need to be complete" })
     } else {
-  //     this.signInHandler(registerData)
-  //   }
-  // }
-
-
-  // signInHandler = (data) => {
     var em = "Email Address Not Found"
     var j = this.props.copyState.customerList.length - 1
     for (let i = 0; i < j; i++) {
@@ -73,9 +67,7 @@ class SignIn extends Component {
           this.props.copyState.customer.address4 = this.props.copyState.customerList[i].address4
           this.props.copyState.customer.address5 = this.props.copyState.customerList[i].address5
           this.props.copyState.customer.address6 = this.props.copyState.customerList[i].address6
-
           this.props.buttonHandlerFunction("signIn", this.props.copyState)
-          // this.setState({ errorMessage: "" })
           this.handleClose()
         }
       }
@@ -83,7 +75,6 @@ class SignIn extends Component {
     }
   }
   }
-
 
     render() {
       return (
@@ -131,57 +122,3 @@ class SignIn extends Component {
   }
 
   export default SignIn;
-
-
-
-
-
-// import React, { Component } from 'react';
-
-
-
-// class SignIn extends Component {
-
-
-
-
-//     render() {
-//   return (
-// <div>
-
-// <form>
-//             <p className="h4 text-center mb-4">Sign in</p>
-//             <label htmlFor="defaultFormLoginEmailEx" className="grey-text">
-//               Your email
-//             </label>
-//             <input
-//               type="email"
-//               id="defaultFormLoginEmailEx"
-//               className="form-control"
-//             />
-//             <br />
-//             <label htmlFor="defaultFormLoginPasswordEx" className="grey-text">
-//               Your password
-//             </label>
-//             <input
-//               type="password"
-//               id="defaultFormLoginPasswordEx"
-//               className="form-control"
-//             />
-//             <div className="text-center mt-4">
-//             </div>
-//           </form>
-
-// </div>
-
-
-
-
-
-
-
-//   );
-// };
-// }
-
-// export default SignIn;

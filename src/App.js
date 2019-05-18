@@ -168,7 +168,10 @@ removeFromBasket=(basketItem)=>{
   }
 
 
-  signIn = () => {
+  signIn = (copyState) => {
+    this.setState({
+      copyState
+    })
     this.setState({
       displayIfLoggedIn: "display",
       displayIfLoggedOut: "hide",

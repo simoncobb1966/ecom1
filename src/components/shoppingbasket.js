@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Modal from 'react-bootstrap/Modal'
-import Checkout from './checkout';
+import Register from './register'
+import Signin from './signin'
+import Checkout from './checkout'
 // done with Bootstrap modal
 class Shoppingbasket extends Component {
 
@@ -16,9 +18,9 @@ class Shoppingbasket extends Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
-checkout=()=>{
-  
-}
+  // checkout = () => {
+
+  // }
 
   handleClose(event) {
     this.setState({
@@ -35,9 +37,14 @@ checkout=()=>{
   }
 
 
-handleRemoveFromBasket = (i,event)=>{
-   this.props.buttonHandlerFunction("removeFromBasket", i)
-}
+  handleRemoveFromBasket = (i, event) => {
+    this.props.buttonHandlerFunction("removeFromBasket", i)
+  }
+
+  register=()=>{
+    this.handleClose()
+    // <register />
+  }
 
   render() {
 
@@ -48,20 +55,28 @@ handleRemoveFromBasket = (i,event)=>{
         var a = this.props.copyState.basket[i].sku
         var b = this.props.copyState.jb[j].sku
         if (a === b) {
-          var t = { qty: this.props.copyState.basket[i].qty, sku: j, price:this.props.copyState.basket[i].price, format: this.props.copyState.basket[i].format}
+          var t = { qty: this.props.copyState.basket[i].qty, sku: j, price: this.props.copyState.basket[i].price, format: this.props.copyState.basket[i].format }
           IDs.push(t)
           subTotalCost = subTotalCost + this.props.copyState.basket[i].qty * this.props.copyState.jb[j].price
         }
       }
     }
 
+    const numInBasket = () => {
+      var total = 0
+      for (let i = 0; i < this.props.copyState.basket.length; i++) {
+        total = total + this.props.copyState.basket[i].qty
+      }
+      return total
+    }
+
     return (
       <>
         <element>
 
-
           <button onClick={this.handleShow} type="button" class="btn btn-primary signOutButton">
-            Shopping Basket <span className="badge badge-light ">{this.props.copyState.basket.length}</span>
+            {/* Shopping Basket <span className="badge badge-light ">{this.props.copyState.basket.length}</span> */}
+            Shopping Basket <span className="badge badge-light ">{numInBasket()}</span>
           </button>
 
 
@@ -74,12 +89,12 @@ handleRemoveFromBasket = (i,event)=>{
             {
               IDs.map((item, i) => {
                 return <element className="buttonright">
-                {item.qty} x {this.props.copyState.jb[item.sku].title}{" ("}
-                {item.format}{") @ £"}
-                {" "}{item.price}{" each."}
-                <button onClick={(evt) => this.handleRemoveFromBasket(i, evt)} type="button" name="remove" class="buttonRowButton btn btn-danger btn-smt">Remove</button>
-                 </element>
-                
+                  {item.qty} x {this.props.copyState.jb[item.sku].title}{" ("}
+                  {item.format}{") @ £"}
+                  {" "}{item.price}{" each."}
+                  <button onClick={(evt) => this.handleRemoveFromBasket(i, evt)} type="button" name="remove" class="buttonRowButton btn btn-danger btn-smt">Remove</button>
+                </element>
+
               })
             }
 
@@ -90,11 +105,25 @@ handleRemoveFromBasket = (i,event)=>{
                 Close
             </Button>
 
-            <Button variant="secondary" onClick={this.checkout}>
-                Checkout
-            </Button>
+              <div className={this.props.copyState.displayIfLoggedIn}>
+                <Checkout copyState={this.props.copyState}
+                  buttonHandlerFunction={this.props.buttonHandlerFunction} />
+              </div>
 
-            {/* <Checkout copyState={this.props.copyState}/> */}
+              <div className={this.props.copyState.displayIfLoggedOut}>
+                <Signin
+                  close={this.handleClose}
+                  copyState={this.props.copyState}
+                  buttonHandlerFunction={this.props.buttonHandlerFunction}
+                />
+
+                <Register
+                 close={this.handleClose}
+                  copyState={this.props.copyState}
+                  buttonHandlerFunction={this.props.buttonHandlerFunction}
+                  displayIfLoggedOut={this.props.copyState.displayIfLoggedOut}
+                />
+              </div>
 
             </Modal.Footer>
 
