@@ -3,31 +3,46 @@ import Button from '@material-ui/core/Button';
 import Modal from 'react-bootstrap/Modal'
 import 'react-flags-select/css/react-flags-select.css';
 
+var customer = []
+
+
 // done with Bootstrap modal
 class Checkout extends Component {
+
 
     constructor(props, context) {
         super(props, context);
 
         this.state = {
             show: false,
-            firstName: this.props.copyState.customer.firstName,
-            secondName: this.props.copyState.customer.secondName,
-            email: this.props.copyState.customer.email,
-            address1: this.props.copyState.customer.address1,
-            address2: this.props.copyState.customer.address2,
-            address3: this.props.copyState.customer.address3,
-            address4: this.props.copyState.customer.address4,
-            address5: this.props.copyState.customer.address5,
-            address6: "GB",
+            customer: {
+                firstName: this.props.copyState.customer.firstName,
+                secondName: this.props.copyState.customer.secondName,
+                email: this.props.copyState.customer.email,
+                address1: this.props.copyState.customer.address1,
+                address2: this.props.copyState.customer.address2,
+                address3: this.props.copyState.customer.address3,
+                address4: this.props.copyState.customer.address4,
+                address5: this.props.copyState.customer.address5,
+                address6: "United Kingdom"
+            },
             mode: 0,
-            customer: [],
             customerLines: 0
         };
+
+        customer[0] = this.props.copyState.customer.firstName + " " + this.props.copyState.customer.secondName
+        customer[1] = this.props.copyState.customer.address1
+        customer[2] = this.props.copyState.customer.address2
+        customer[3] = this.props.copyState.customer.address3
+        customer[4] = this.props.copyState.customer.address4
+        customer[5] = this.props.copyState.customer.address5
+        customer[6] = this.props.copyState.customer.address6
+        customer[7] = this.props.copyState.email
 
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
+
     }
 
 
@@ -36,35 +51,34 @@ class Checkout extends Component {
         this.setState({
             mode: 1
         })
-        var customer = []
-        customer[0] = this.state.firstName + " " + this.state.secondName
-        customer[1] = this.state.address1
-        customer[2] = this.state.address2
-        customer[3] = this.state.address3
-        customer[4] = this.state.address4
-        customer[5] = this.state.address5
-        customer[6] = this.state.address6
-        customer[7] = this.state.email
-
-if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName+" "+this.props.copyState.customer.secondName}
-
-
-        this.setState({
-            customer: customer,
-
-        })
+        customer = []
+        customer[0] = this.props.copyState.customer.firstName + " " + this.props.copyState.customer.secondName
+        customer[1] = this.props.copyState.customer.address1
+        customer[2] = this.props.copyState.customer.address2
+        customer[3] = this.props.copyState.customer.address3
+        customer[4] = this.props.copyState.customer.address4
+        customer[5] = this.props.copyState.customer.address5
+        customer[6] = this.props.copyState.customer.address6
+        customer[7] = this.props.copyState.customer.email
+        for (let i = 0; i < customer.length; i++) {
+            if (customer[i].length < 1) {
+                customer[i] = "BCFC"
+            }
+        }
+        do {
+            var flag = 0
+            let i = customer.indexOf("BCFC")
+            if (i > -1) {
+                customer.splice(i, 1)
+                flag = 1
+            }
+        } while (flag === 1);
     }
 
-    flagSelect = (country) => {
-        this.setState({
-            address6: country,
-            errorMessage: ''
-        })
-    }
+
     handleChange = (event) => {
-        const name = event.target.name
+        this.props.copyState.customer[event.target.name] = event.target.value
         this.setState({
-            [name]: event.target.value,
             errorMessage: ''
         })
     }
@@ -85,15 +99,15 @@ if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName
     }
 
     handleSubmit = (event) => {
-        this.props.copyState.customer.firstName = this.state.firstName
-        this.props.copyState.customer.secondName = this.state.secondName
-        this.props.copyState.customer.email = this.state.email
-        this.props.copyState.customer.address1 = this.state.address1
-        this.props.copyState.customer.address2 = this.state.address2
-        this.props.copyState.customer.address3 = this.state.address3
-        this.props.copyState.customer.address4 = this.state.address4
-        this.props.copyState.customer.address5 = this.state.address5
-        this.props.copyState.customer.address6 = this.state.address6
+        this.props.copyState.customer.firstName = this.state.customer.firstName
+        this.props.copyState.customer.secondName = this.state.customer.secondName
+        this.props.copyState.customer.email = this.state.customer.email
+        this.props.copyState.customer.address1 = this.state.customer.address1
+        this.props.copyState.customer.address2 = this.state.customer.address2
+        this.props.copyState.customer.address3 = this.state.customer.address3
+        this.props.copyState.customer.address4 = this.state.customer.address4
+        this.props.copyState.customer.address5 = this.state.customer.address5
+        this.props.copyState.customer.address6 = this.state.customer.address6
         this.props.buttonHandlerFunction("checkout", this.props.copyState)
         this.handleClose(event)
     }
@@ -123,7 +137,8 @@ if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName
     }
 
     checkForNull = (temp) => {
-        // if (temp === "") { return "" }
+        if (temp === "") { return <li className="null returned">{temp}</li> }
+        if (temp === undefined) { return <li className="undefined returned">{temp}</li> }
         return (<li className="customerName">{temp}</li>)
     }
 
@@ -131,14 +146,13 @@ if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName
         this.props.copyState.basket = []
         this.props.buttonHandlerFunction("pay")
         this.handleClose()
-
     }
 
     render() {
 
         const tprice = this.totalPrice()
 
-        const displayCustomerDetails = this.state.customer.map(item => {
+        const displayCustomerDetails = customer.map(item => {
             return this.checkForNull(item)
         })
 
@@ -153,6 +167,7 @@ if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName
             </li>)
         })
 
+
         return (
             <>
                 <element>
@@ -166,10 +181,13 @@ if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName
                         <Modal.Header closeButton>
                             <Modal.Title>Checkout</Modal.Title>
                         </Modal.Header>
-                         <div className={this.showmode0()}>
-                        <pre className="createAccount">
-                            Page 1 of 2.{"\n"}
-                            Check/amend your account details before checking out.
+
+
+                        <div className={this.showmode0()}>
+                            <pre className="createAccount">
+                                Page 1 of 2.{"\n"}
+                                Check/amend your account details before checking out.
+
                         </pre>
                             <form onSubmit={this.handleSubmit} className="createAccount">
                                 <span>
@@ -223,6 +241,7 @@ if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName
 
 
                                 <p className="redText centered">{this.state.errorMessage}</p>
+
                             </form>
                         </div>
 
@@ -241,7 +260,6 @@ if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName
                             {tprice}
                             <p></p>
                             <div className="centered">
-                                {/* < Button onClick={this.pay} variant="primary" > */}
                                 <Button onClick={this.pay} variant="contained" color="secondary" >
                                     PAY NOW
                                 </Button>
@@ -251,23 +269,10 @@ if (customer[0]===undefined){customer[0]=this.props.copyState.customer.firstName
                         </div>
 
                         <Modal.Footer>
-                            {/* <button variant="secondary" onClick={this.handleClose}>
-                                Close
-                            </button> */}
-
 
                             <button variant="secondary" className={this.showmode0()} onClick={this.confirmOrder}>
                                 Confirm Order
                             </button>
-
-                            {/* <FinaliseOrder
-                                copyState={this.props.copyState}
-                                buttonHandlerFunction={this.props.buttonHandlerFunction} 
-                                />  */}
-
-                            {/* <button onClick={this.handleSubmit} variant="primary" className={this.showmode0()}>
-                                Create Account!
-            </button> */}
 
                         </Modal.Footer>
 

@@ -41,9 +41,22 @@ class Shoppingbasket extends Component {
     this.props.buttonHandlerFunction("removeFromBasket", i)
   }
 
-  register=()=>{
+  register = () => {
     this.handleClose()
     // <register />
+  }
+
+  basketempty = () => {
+    if (this.props.copyState.basket.length === 0) {
+      return (<li className="customerName">Basket empty</li>)
+    }
+  }
+
+  displayCheckout = () => {
+    if (this.props.copyState.basket.length === 0) {
+      return "hide"
+    }
+    return "this.props.copyState.displayIfLoggedIn"
   }
 
   render() {
@@ -57,7 +70,8 @@ class Shoppingbasket extends Component {
         if (a === b) {
           var t = { qty: this.props.copyState.basket[i].qty, sku: j, price: this.props.copyState.basket[i].price, format: this.props.copyState.basket[i].format }
           IDs.push(t)
-          subTotalCost = subTotalCost + this.props.copyState.basket[i].qty * this.props.copyState.jb[j].price
+          // subTotalCost = subTotalCost + this.props.copyState.basket[i].qty * this.props.copyState.jb[j].price
+          subTotalCost = subTotalCost + this.props.copyState.basket[i].qty * this.props.copyState.basket[i].price
         }
       }
     }
@@ -85,6 +99,7 @@ class Shoppingbasket extends Component {
               <Modal.Title>Your Shopping Basket</Modal.Title>
             </Modal.Header>
 
+            {this.basketempty()}
 
             {
               IDs.map((item, i) => {
@@ -105,7 +120,9 @@ class Shoppingbasket extends Component {
                 Close
             </Button>
 
-              <div className={this.props.copyState.displayIfLoggedIn}>
+              {/* <div className={this.props.copyState.displayIfLoggedIn}> */}
+              {/* <div className={this.basketEmptycss}> */}
+              <div className={this.displayCheckout()}>
                 <Checkout copyState={this.props.copyState}
                   buttonHandlerFunction={this.props.buttonHandlerFunction} />
               </div>
@@ -118,7 +135,7 @@ class Shoppingbasket extends Component {
                 />
 
                 <Register
-                 close={this.handleClose}
+                  close={this.handleClose}
                   copyState={this.props.copyState}
                   buttonHandlerFunction={this.props.buttonHandlerFunction}
                   displayIfLoggedOut={this.props.copyState.displayIfLoggedOut}
