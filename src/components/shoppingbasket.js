@@ -18,11 +18,9 @@ class Shoppingbasket extends Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
-  // checkout = () => {
-
-  // }
 
   handleClose(event) {
+    alert ("handleclose")
     this.setState({
       show: false,
       errorMessage: ''
@@ -54,6 +52,10 @@ class Shoppingbasket extends Component {
 
   displayCheckout = () => {
     if (this.props.copyState.basket.length === 0) {
+      // alert(this.props.copyState.basket.length)
+      return "hide"
+    }
+    if (!this.props.copyState.login){
       return "hide"
     }
     return "this.props.copyState.displayIfLoggedIn"
@@ -70,11 +72,15 @@ class Shoppingbasket extends Component {
         if (a === b) {
           var t = { qty: this.props.copyState.basket[i].qty, sku: j, price: this.props.copyState.basket[i].price, format: this.props.copyState.basket[i].format }
           IDs.push(t)
-          // subTotalCost = subTotalCost + this.props.copyState.basket[i].qty * this.props.copyState.jb[j].price
           subTotalCost = subTotalCost + this.props.copyState.basket[i].qty * this.props.copyState.basket[i].price
         }
       }
     }
+
+const closeHandler = ()=>{
+  alert("closehandler!")
+  this.handleClose()
+}
 
     const numInBasket = () => {
       var total = 0
@@ -120,8 +126,8 @@ class Shoppingbasket extends Component {
                 Close
             </Button>
 
-              {/* <div className={this.props.copyState.displayIfLoggedIn}> */}
-              {/* <div className={this.basketEmptycss}> */}
+
+
               <div className={this.displayCheckout()}>
                 <Checkout copyState={this.props.copyState}
                   buttonHandlerFunction={this.props.buttonHandlerFunction} />
@@ -129,7 +135,8 @@ class Shoppingbasket extends Component {
 
               <div className={this.props.copyState.displayIfLoggedOut}>
                 <Signin
-                  close={this.handleClose}
+                  // close={()=>this.handleClose()}
+                  close={closeHandler}
                   copyState={this.props.copyState}
                   buttonHandlerFunction={this.props.buttonHandlerFunction}
                 />
