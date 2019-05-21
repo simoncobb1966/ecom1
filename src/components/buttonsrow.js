@@ -17,6 +17,7 @@ class Buttonsrow extends Component {
                         <Signin
                             copyState={this.props.copyState}
                             buttonHandlerFunction={this.props.buttonHandlerFunction}
+                            changeModeHandler={this.props.changeModeHandler}
                         />
 
                         <Register

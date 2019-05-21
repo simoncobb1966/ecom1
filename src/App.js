@@ -2,48 +2,44 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './components/header';
 import Footer from './components/footer';
-import Productsmall from './components/productSmall';
 import Buttonsrow from './components/buttonsrow';
-import FinaliseOrder from './components/finaliseorder';
-
+import Smallproductdetails from './components/smallproductdetails';
 
 class App extends Component {
 
-checkout=(copyState)=>{
-  this.setState({
-    copyState
-  })
-}
+  checkout = (copyState) => {
+    this.setState({
+      copyState
+    })
+  }
+  pay = (copyState) => {
+    this.setState({
+      copyState
+    })
+  }
 
-pay =(copyState)=>{
-  this.setState({
-    copyState
-  })
-}
-
-
-removeFromBasket=(basketItem)=>{
-  var copyState = this.state
-  var tempTasks = copyState.basket.filter(function (elem,i) {
-    return (i !== basketItem);
-  })
-  copyState.basket=tempTasks
-  this.setState({
-    copyState
-  })
-}
+  removeFromBasket = (basketItem) => {
+    var copyState = this.state
+    var tempTasks = copyState.basket.filter(function (elem, i) {
+      return (i !== basketItem);
+    })
+    copyState.basket = tempTasks
+    this.setState({
+      copyState
+    })
+  }
 
   addtobasketdvd = (sku) => {
     let flag = false
     var copyState = this.state
     for (let i = 0; i < copyState.basket.length; i++) {
-      if (sku === copyState.basket[i].sku && copyState.basket[i].format==="DVD" ) {
+      if (sku === copyState.basket[i].sku && copyState.basket[i].format === "DVD") {
         copyState.basket[i].qty = copyState.basket[i].qty + 1
         flag = true
       }
     }
     if (!flag) {
-      var index=this.getIndexFromSku(sku)
+      var index = this.getIndexFromSku(sku)
       var item = {
         qty: 1,
         jbindex: index,
@@ -53,26 +49,22 @@ removeFromBasket=(basketItem)=>{
       }
       copyState.basket.push(item)
     }
-
     this.setState({
       copyState
     })
   }
 
   addtobasketblu = (sku) => {
-    // alert("add to basket")
     let flag = false
     var copyState = this.state
     for (let i = 0; i < copyState.basket.length; i++) {
-      if (sku === copyState.basket[i].sku && copyState.basket[i].format==="Bluray") {
+      if (sku === copyState.basket[i].sku && copyState.basket[i].format === "Bluray") {
         copyState.basket[i].qty = copyState.basket[i].qty + 1
         flag = true
       }
     }
     if (!flag) {
-    
-      var index=this.getIndexFromSku(sku)
- 
+      var index = this.getIndexFromSku(sku)
       var item = {
         qty: 1,
         jbindex: index,
@@ -82,18 +74,16 @@ removeFromBasket=(basketItem)=>{
       }
       copyState.basket.push(item)
     }
-
     this.setState({
       copyState
     })
   }
 
-  getIndexFromSku =(sku)=>{
-  
+  getIndexFromSku = (sku) => {
     var index = this.state.jb.findIndex(productItem => {
       return productItem.sku === sku
-  })
-  return index
+    })
+    return index
   }
 
   registerHandler = (customer) => {
@@ -108,7 +98,6 @@ removeFromBasket=(basketItem)=>{
     copyState.customer.address4 = customer.address4
     copyState.customer.address5 = customer.address5
     copyState.customer.address6 = customer.address6
-
     this.setState({
       copyState
     })
@@ -117,9 +106,7 @@ removeFromBasket=(basketItem)=>{
 
 
   buttonHandler = (name, event) => {
-    // alert(name)
-    if (name==="removeFromBasket") {
-      // alert ("event.format = ",event.format)
+    if (name === "removeFromBasket") {
       this.removeFromBasket(event)
     }
     if (name === "addtobasketdvd") {
@@ -143,11 +130,13 @@ removeFromBasket=(basketItem)=>{
     if (name === "pay") {
       this.pay(this.copyState)
     }
+    if (name === "signin") {
+      this.processSignIn(event)
+    }
   }
 
 
   signOut = () => {
-
     let copyState = this.state
     copyState.customer.firstName = ""
     copyState.customer.secondName = ""
@@ -181,7 +170,6 @@ removeFromBasket=(basketItem)=>{
   }
 
   signInHandler = (copyState) => {
-    //  alert ("logged in")
     this.setState({
       copyState
     })
@@ -189,10 +177,27 @@ removeFromBasket=(basketItem)=>{
 
   }
 
+// changeMode=(copyState)=>{
+//   this.setState({
+//     copyState
+//   })
+// }
+
+processSignIn =(copyState)=>{
+alert("signin")
+
+}
   state = {
-    login: true,
-    displayIfLoggedIn: "display",
-    displayIfLoggedOut: "hide",
+    // show: false,
+    errorMessage: '',
+    email: '',
+    password: '',
+    mode: "catalog",
+    login: false,
+    // displayIfLoggedIn: "display", //"display" if login = true else "hide"
+    // displayIfLoggedOut: "hide", //"hide" if login = true else "display"
+    displayIfLoggedIn: "hide", //"display" if login = true else "hide"
+    displayIfLoggedOut: "display", //"hide" if login = true else "display"
 
     basket: [
     ],
@@ -219,7 +224,7 @@ removeFromBasket=(basketItem)=>{
 
     customer: {
       firstName: "Simon",
-      secondName: "Cobb",
+      secondName: "Cobby",
       email: "simoncobb1966@gmail.com",
       password: "bradford1",
       address1: "7 Fairhaven Ave",
@@ -358,6 +363,8 @@ removeFromBasket=(basketItem)=>{
 
     return (
 
+
+
       <div className="outerdiv">
         <div className="darkyellow">
           <div className="row banner">
@@ -371,24 +378,17 @@ removeFromBasket=(basketItem)=>{
           <Buttonsrow
             copyState={this.state}
             buttonHandlerFunction={this.buttonHandler}
+            changeModeHandler={this.changeMode}
           />
         </div>
 
-        <div class="container maindiv">
-          <div class="row justify-content-md-center">
-            {
-              this.state.jb.map((item, i) => {
-                return <Productsmall
-                  indexkey={item.sku}
-                  jb={this.state.jb[i]}
-                  copyState={this.state}
-                  buttonHandlerFunction={this.buttonHandler}
-                />
-              })
-            }
+        {this.state.mode === "catalog" &&
+          <Smallproductdetails
+            copyState={this.state}
+            buttonHandler={this.buttonHandler}
+          />
+        }
 
-          </div>
-        </div>
 
         <div>
           <Footer />

@@ -5,19 +5,25 @@ import Modal from 'react-bootstrap/Modal'
 class SignIn extends Component {
 
   constructor(props, context) {
-     super(props, context);
+    super(props, context);
 
     this.state = {
       show: false,
       errorMessage: '',
       email: '',
-      password: ''
+      password: '',
+      mode: this.props.copyState.mode
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleShow = () => {
+    this.props.copyState.mode = "signin"
+    // this.setState({ mode: this.props.copyState.mode })
+    // this.props.changeModeHandler(this.props.copyState)
+    this.props.buttonHandlerFunction("signin", this.props.copyState)
   }
 
   handleChange = (event) => {
@@ -28,19 +34,6 @@ class SignIn extends Component {
     })
   }
 
-  handleClose(event) {
-    this.setState({
-      show: false,
-      errorMessage: ''
-    });
-  }
-
-  handleShow() {
-    this.setState({ show: true,
-      errorMessage: ''
-     });
-  }
-
   handleSubmit = (event) => {
     var data = {
       email: this.state.email,
@@ -49,48 +42,45 @@ class SignIn extends Component {
     if (data.email === "" || data.password === "") {
       this.setState({ errorMessage: "All fields need to be complete" })
     } else {
-    var em = "Email Address Not Found"
-    var j = this.props.copyState.customerList.length - 1
-    for (let i = 0; i < j; i++) {
-      let e = this.props.copyState.customerList[i].email
-      let p = this.props.copyState.customerList[i].password
-      if (e === data.email) {
-        em = "Password Incorrect"
-        if (p === data.password) {
-          this.props.copyState.customer.firstName = this.props.copyState.customerList[i].firstName
-          this.props.copyState.customer.secondName = this.props.copyState.customerList[i].secondName
-          this.props.copyState.customer.email = this.props.copyState.customerList[i].email
-          this.props.copyState.customer.password = this.props.copyState.customerList[i].password
-          this.props.copyState.customer.address1 = this.props.copyState.customerList[i].address1
-          this.props.copyState.customer.address2 = this.props.copyState.customerList[i].address2
-          this.props.copyState.customer.address3 = this.props.copyState.customerList[i].address3
-          this.props.copyState.customer.address4 = this.props.copyState.customerList[i].address4
-          this.props.copyState.customer.address5 = this.props.copyState.customerList[i].address5
-          this.props.copyState.customer.address6 = this.props.copyState.customerList[i].address6
-          this.props.buttonHandlerFunction("signIn", this.props.copyState)
-          this.handleClose()
+      var em = "Email Address Not Found"
+      var j = this.props.copyState.customerList.length - 1
+      for (let i = 0; i < j; i++) {
+        let e = this.props.copyState.customerList[i].email
+        let p = this.props.copyState.customerList[i].password
+        if (e === data.email) {
+          em = "Password Incorrect"
+          if (p === data.password) {
+            this.props.copyState.customer.firstName = this.props.copyState.customerList[i].firstName
+            this.props.copyState.customer.secondName = this.props.copyState.customerList[i].secondName
+            this.props.copyState.customer.email = this.props.copyState.customerList[i].email
+            this.props.copyState.customer.password = this.props.copyState.customerList[i].password
+            this.props.copyState.customer.address1 = this.props.copyState.customerList[i].address1
+            this.props.copyState.customer.address2 = this.props.copyState.customerList[i].address2
+            this.props.copyState.customer.address3 = this.props.copyState.customerList[i].address3
+            this.props.copyState.customer.address4 = this.props.copyState.customerList[i].address4
+            this.props.copyState.customer.address5 = this.props.copyState.customerList[i].address5
+            this.props.copyState.customer.address6 = this.props.copyState.customerList[i].address6
+            this.props.buttonHandlerFunction("signIn", this.props.copyState)
+            this.handleClose()
+          }
         }
+        this.setState({ errorMessage: em })
       }
-      this.setState({ errorMessage: em })
     }
   }
-  }
 
-    render() {
-      return (
-        <>
-          <element>
-            <element className='buttonRowButton {this.props.displayIfLoggedOut}' >
-              <Button onClick={this.handleShow} variant="contained" color="primary">
-                Sign In
+  render() {
+    return (
+      <>
+        <element>
+          <element className='buttonRowButton {this.props.displayIfLoggedOut}' >
+            <Button onClick={this.handleShow} variant="contained" color="primary">
+              Sign In
         </Button>
-            </element>
+          </element>
 
-            <Modal show={this.state.show} onHide={this.handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Sign in to James Bond Shop</Modal.Title>
-              </Modal.Header>
-
+          {this.state.mode === "signin" &&
+            <div>
               <form onSubmit={this.handleSubmit} className="createAccount">
                 <input type="text" name="email"
                   placeholder="Enter your email"
@@ -102,23 +92,15 @@ class SignIn extends Component {
                   onChange={this.handleChange}
                   className="form-control registerTextBox">
                 </input>
-
                 <p className="redText centered">{this.state.errorMessage}</p>
-
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={this.handleClose}>
-                    Cancel
-            </Button>
-                  <Button onClick={this.handleSubmit} variant="primary" >
-                    Sign In
-            </Button>
-                </Modal.Footer>
               </form>
-            </Modal>
-          </element>
-        </>
-      );
-    }
-  }
+            </div>
+          }
 
-  export default SignIn;
+        </element>
+      </>
+    );
+  }
+}
+
+export default SignIn;
