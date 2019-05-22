@@ -79,7 +79,7 @@ class SignIn extends Component {
         </Button>
           </element>
 
-          {this.state.mode === "signin" &&
+          {/* {this.state.mode === "signin" &&
             <div>
               <form onSubmit={this.handleSubmit} className="createAccount">
                 <input type="text" name="email"
@@ -95,7 +95,7 @@ class SignIn extends Component {
                 <p className="redText centered">{this.state.errorMessage}</p>
               </form>
             </div>
-          }
+          } */}
 
         </element>
       </>
